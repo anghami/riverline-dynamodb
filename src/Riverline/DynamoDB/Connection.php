@@ -23,7 +23,7 @@ class Connection
 
     /**
      * Read and Write unit counter
-     * @var int
+     * @var []int
      */
     protected $readUnit = array(), $writeUnit = array();
 

@@ -1,10 +1,14 @@
 {
-    "name":"riverline/dynamodb",
+    "name":"ohm-s/dynamodb",
     "description":"Amazon WebService DynamoDB PHP object wrapper",
     "keywords":["dynamodb","aws","amazon"],
     "type":"library",
     "license":"MIT",
     "authors":[
+        {
+            "name":"Omar Ayoub-Salloum",
+            "email":"omar@306.dev"
+        },
         {
             "name":"Romain Cambien",
             "email":"romain@riverline.fr"

@@ -31,20 +31,16 @@ class Connection
      * @param string $key The AWS access Key
      * @param string $secret The AWS secret Key
      * @param string $region The DynamoDB region endpoint
+     * @param [] $extraArgs custom configuration options to DynamoDbClient, such as key / secret for key based authentication instead of role based authentcation
      * @throws \RuntimeException
      */
-    public function __construct($key, $secret, $region)
+    public function __construct($region, $extraArgs = [])
     {
-        if (!class_exists('Aws\DynamoDb\DynamoDbClient')) {
-            throw new \RuntimeException('Missing AWS PHP SDK');
-        }
-
-        $this->connector = DynamoDbClient::factory(array(
-            'key'     => $key,
-            'secret'  => $secret,
-            'region'  => $region,
-            'version' => '2011-12-05'
-        ));
+        $args = [
+            'region' => $region
+        ];
+        $args = array_merge($args, $extraArgs);
+        $this->connector = new DynamoDbClient($args);
     }
 
     /**

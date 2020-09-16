@@ -214,7 +214,7 @@ class Connection
             return $this->populateAttributes($response);
         }
         catch(DynamoDbException $ex) {
-            throw new \Exception($ex->getAwsErrorMessage(), $ex->getAwsErrorCode(), $ex);
+            throw new ODMException( $ex->getAwsErrorCode() . ': ' . $ex->getAwsErrorMessage(), 1, $ex);
         }
     }
 

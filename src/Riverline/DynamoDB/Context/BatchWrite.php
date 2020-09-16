@@ -41,7 +41,7 @@ class BatchWrite implements \Countable
      * @throws \Riverline\DynamoDB\Exception\AttributesException
      * @return BatchWrite
      */
-    public function addKeyToDelete($table, $hash, $range = null)
+    public function addKeyToDelete($table, Attribute $hash, $range = null)
     {
         if ($this->count() >= 25) {
             throw new \Riverline\DynamoDB\Exception\AttributesException("Can't add more than 25 requests");

@@ -7,6 +7,7 @@ use Riverline\DynamoDB\Logger\Logger;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Exception\DynamoDbException;
 use Exception;
+use Riverline\DynamoDB\Exception\AttributesException;
 use Riverline\DynamoDB\ODMException;
 
 /**
@@ -636,7 +637,7 @@ class Connection
                 if (null !== $this->logger) {
                     $this->log($message, Logger::ERROR);
                 }
-                throw new Exception\AttributesException($message);
+                throw new AttributesException($message);
             }
 
             $parameters = $context->getForDynamoDB();

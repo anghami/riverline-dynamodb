@@ -1,4 +1,6 @@
 <?php
+
+
 namespace Riverline\DynamoDB;
 
 class ODMException extends \Exception { 

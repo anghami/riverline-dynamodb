@@ -840,7 +840,7 @@ class Connection
      * @param \Guzzle\Service\Resource\Model $data The response body data
      * @return array|null
      */
-    protected function populateAttributes(\Guzzle\Service\Resource\Model $data)
+    protected function populateAttributes(\Aws\Result $data)
     {
         if (isset($data['Attributes'])) {
             $attributes = array();

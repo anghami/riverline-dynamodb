@@ -22,12 +22,13 @@
     "minimum-stability": "stable",
     "require":{
         "php":">=5.3.5",
-        "aws/aws-sdk-php": ">=2.1.2,<=3.81.7"
+        "aws/aws-sdk-php": ">=3.0.0,<=3.81.7"
     },
     "autoload":{
         "psr-0":{
             "Riverline\\DynamoDB": "src/",
-            "Aws\\DynamoDb\\Enum": "src/"
+            "Aws\\DynamoDb\\Enum": "src/",
+            "Aws\\Common\\Enum": "src/"
         }
     }
 }

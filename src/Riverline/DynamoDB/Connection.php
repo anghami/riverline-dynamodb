@@ -5,6 +5,7 @@ namespace Riverline\DynamoDB;
 use Riverline\DynamoDB\Logger\Logger;
 
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\DynamoDb\Exception\DynamoDbException;
 
 /**
  * @class
@@ -169,47 +170,52 @@ class Connection
      */
     public function put(Item $item, Context\Put $context = null)
     {
-        $table = $item->getTable();
+        try {
+            $table = $item->getTable();
 
-        if (null !== $this->logger) {
-            $this->log('Put on table '.$table);
-        }
-
-        if (empty($table)) {
-            throw new \Riverline\DynamoDB\Exception\AttributesException('Item do not have table defined');
-        }
-
-        $attributes = array();
-        foreach ($item as $name => $attribute) {
-            /** @var $attribute \Riverline\DynamoDB\Attribute */
-            if ("" !== $attribute->getValue()) {
-                // Only not empty string
-                $attributes[$name] = $attribute->getForDynamoDB();
+            if (null !== $this->logger) {
+                $this->log('Put on table '.$table);
             }
+
+            if (empty($table)) {
+                throw new \Riverline\DynamoDB\Exception\AttributesException('Item do not have table defined');
+            }
+
+            $attributes = array();
+            foreach ($item as $name => $attribute) {
+                /** @var $attribute \Riverline\DynamoDB\Attribute */
+                if ("" !== $attribute->getValue()) {
+                    // Only not empty string
+                    $attributes[$name] = $attribute->getForDynamoDB();
+                }
+            }
+            $parameters = array(
+                'TableName' => $table,
+                'Item'      => $attributes,
+            );
+
+            if (null !== $context) {
+                $parameters += $context->getForDynamoDB();
+            }
+
+            if (null !== $this->logger) {
+                $this->log('Put request paramaters : '.print_r($parameters, true), Logger::DEBUG);
+            }
+
+            $response = $this->connector->putItem($parameters);
+
+            if (null !== $this->logger) {
+                $this->log('Put request response : '.print_r($response, true), Logger::DEBUG);
+            }
+
+            // Update write counter
+            $this->addConsumedWriteUnits($table, floatval($response['ConsumedCapacityUnits']));
+
+            return $this->populateAttributes($response);
         }
-        $parameters = array(
-            'TableName' => $table,
-            'Item'      => $attributes,
-        );
-
-        if (null !== $context) {
-            $parameters += $context->getForDynamoDB();
+        catch(DynamoDbException $ex) {
+            throw new \Exception($ex->getAwsErrorMessage(), $ex->getAwsErrorCode(), $ex);
         }
-
-        if (null !== $this->logger) {
-            $this->log('Put request paramaters : '.print_r($parameters, true), Logger::DEBUG);
-        }
-
-        $response = $this->connector->putItem($parameters);
-
-        if (null !== $this->logger) {
-            $this->log('Put request response : '.print_r($response, true), Logger::DEBUG);
-        }
-
-        // Update write counter
-        $this->addConsumedWriteUnits($table, floatval($response['ConsumedCapacityUnits']));
-
-        return $this->populateAttributes($response);
     }
 
     /**

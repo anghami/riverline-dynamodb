@@ -26,7 +26,8 @@
     },
     "autoload":{
         "psr-0":{
-            "Riverline\\DynamoDB": "src/"
+            "Riverline\\DynamoDB": "src/",
+            "Aws\\DynamoDb\\Enum": "src/"
         }
     }
 }

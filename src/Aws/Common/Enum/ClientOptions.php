@@ -16,7 +16,7 @@
 
 namespace Aws\Common\Enum;
 
-use Aws\Common\Enum;
+use Aws\Common\Enum\Enum;
 
 /**
  * Contains enumerable default factory options that can be passed to a client's factory method

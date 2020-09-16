@@ -16,7 +16,7 @@
 
 namespace Aws\Common\Enum;
 
-use Aws\Common\Enum;
+use Aws\Common\Enum\Enum;
 
 /**
  * User-Agent header strings for various high level operations

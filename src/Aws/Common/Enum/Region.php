@@ -16,7 +16,7 @@
 
 namespace Aws\Common\Enum;
 
-use Aws\Common\Enum;
+use Aws\Common\Enum\Enum;
 
 /**
  * Contains enumerable region code values. These should be useful in most cases,

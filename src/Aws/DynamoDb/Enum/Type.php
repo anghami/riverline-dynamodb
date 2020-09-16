@@ -16,7 +16,7 @@
 
 namespace Aws\DynamoDb\Enum;
 
-use Aws\Common\Enum;
+use Aws\Common\Enum\Enum;
 
 /**
  * Contains all enumerable DynamoDB attribute type values
